@@ -2,7 +2,7 @@
 class db{
 
 private $host="localhost";
-private $dbname="php_test";
+private $dbname="cafe_project";
 private $user="root";
 private $pass="";
 private $connection="";
