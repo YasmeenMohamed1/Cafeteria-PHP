@@ -5,9 +5,8 @@ error_reporting(E_ALL);
 // if(empty($_COOKIE['email'])){
 //     header('Location:login.php');
 // }
-require("DB_Connection.php");
+require("connect.php");
 
-$connection = new db();
 $id=$_REQUEST['id'];
 $result= $connection->delete_data("product","id='$id'");
 

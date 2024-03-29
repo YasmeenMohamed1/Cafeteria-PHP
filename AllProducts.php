@@ -10,7 +10,7 @@
 
     
 <?php
-require("DB_Connection.php");
+require("connect.php");
 
 ini_set("display_errors",1);
 ini_set("display_startup_errors",1);
@@ -29,7 +29,6 @@ echo "<table class='table' border=2>
 
 </tr>";
 $available=0;
-$connection= new db;
 $result=$connection->get_data('product');
 while($row = $result->fetch(PDO::FETCH_ASSOC)) {
     echo "<tr >";
