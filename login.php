@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user) {
         if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
-            $_SESSION['user_image'] = $user['image'];
+            $_SESSION['image'] = $user['image'];
 
             if ($user['role'] == 'admin') {
                 header("Location: adminHome.php");
