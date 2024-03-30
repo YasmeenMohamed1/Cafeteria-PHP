@@ -1,6 +1,9 @@
-<?php (@include ("./layouts/header.php")) or die(" file not exist"); ?>
-<?php (@include ("./layouts/admin.nav.php")) or die(" file not exist"); ?>
-<?php
+<?php 
+session_start();
+
+(@include ("./layouts/header.php")) or die("Header file does not exist");
+(@include ("./layouts/admin.nav.php")) or die("Admin navigation file does not exist");
+
 require("DB_Connection.php");
 
 $errorMsg = "";
@@ -18,11 +21,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user) {
         if (password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_image'] = $user['image'];
+
             if ($user['role'] == 'admin') {
                 header("Location: adminHome.php");
                 exit();
             } elseif ($user['role'] == 'user') {
-                header("Location: userHome.php");
+                header("Location: user.index.php");
                 exit();
             }
         } else {
@@ -48,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 <title>Login</title>
 <style>
     .card {
@@ -105,4 +113,4 @@ function checkEmailExistence() {
 }
 </script>
 
-<?php (@include ("./layouts/footer.php")) or die(" file not exist"); ?>
+<?php (@include ("./layouts/footer.php")) or die("Footer file does not exist"); ?>
