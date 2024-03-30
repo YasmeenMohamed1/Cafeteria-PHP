@@ -33,11 +33,12 @@ $pages=ceil($num_of_rows/$limit);
    $display.='<div class="d-flex flex-wrap mb-5">';
     foreach ($products as $product) {
      $display .='
-        <div class="col-md-3 col-6 cont mb-5">
+        <div class="col-md-4 col-lg-3 col-6 cont mb-5 proItem">
             <div class="position-relative">
-                <img class="w-50 rounded-circle mb-3 mb-sm-1" src="../assets/img/product/'.$product["image"].'" alt="">
+                <img class="w-50 rounded-circle mb-3 mb-sm-1 " style="height:80px;" src="../assets/img/products/'.$product["image"].'" alt="">
                 <h5 class="menu-price text-sm"> $'.$product["price"].'</h5>
                 <h4 class="text-sm w-50 text-center">'.$product["pro_name"].'</h4>
+                <input type="hidden" id="'.$product["id"].'">
             </div>
         </div>
               ';
