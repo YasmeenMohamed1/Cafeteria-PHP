@@ -1,13 +1,5 @@
 <?php
 
-(@include("./layouts/header.php")) or die(" file not exist");
-(@include("./layouts/user.nav.php")) or die(" file not exist");
-?>
-
-
-
-<?php
-
 session_start();
 require('DB_Connection.php');
 
@@ -104,6 +96,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
 
 </html>
 
-<?php
-(@include("./layouts/footer.php")) or die(" file not exist");
-?>
