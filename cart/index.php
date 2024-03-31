@@ -6,9 +6,12 @@ session_start();
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-3" class="cart-item">
-
-            //المفروض المنتجات تظهر هنا
+        <div class="col-md-3">
+            <!-- Cart div to display products -->
+            <div class="cart" id="cart">
+                <!-- Cart items will be displayed here -->
+            </div>
+            <!-- Form for notes and room selection -->
             <div>
                 <form action="place_order.php" method="post">
                     <label for="notes">Notes:</label><br>
@@ -16,13 +19,17 @@ session_start();
 
                     <label for="room">Room:</label>
                     <select id="room" name="room">
-                        <option value="101"> 101</option>
-                        <option value="102"> 102</option>
-                        <option value="103"> 103</option>
+                        <option value="101">101</option>
+                        <option value="102">102</option>
+                        <option value="103">103</option>
                     </select><br><br>
 
                     <input type="hidden" id="total-cost" name="total" value="0">
+
+                    <!-- Display total price -->
+
                     <div class="text-end m-3">
+                        <div id="total-price">Total Price: $0.00</div> <br>
                         <button type="submit" name="confirm" class="btn btn-primary">Confirm</button>
                     </div>
                 </form>
@@ -40,45 +47,14 @@ session_start();
     </div>
 </div>
 
-<!-- Jquery Js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Include jQuery library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
 $(document).ready(function() {
-    function calculateTotalCost() {
-        var totalCost = 0;
-        $(".cart-item").each(function() {
-            var quantity = $(this).find(".quantity-input").val();
-            var price = $(this).data("price");
-            totalCost += quantity * price;
-        });
-        $("#total-cost").val(totalCost.toFixed(2));
-    }
+    // Initialize total price
+    var totalPrice = 0;
 
-
-    $(document).on("click", ".increase-quantity", function() {
-        var input = $(this).siblings(".quantity-input");
-        var quantity = parseInt(input.val()) + 1;
-        input.val(quantity);
-        calculateTotalCost();
-    });
-
-    $(document).on("click", ".decrease-quantity", function() {
-        var input = $(this).siblings(".quantity-input");
-        var quantity = parseInt(input.val()) - 1;
-        if (quantity < 1) {
-            quantity = 1;
-        }
-        input.val(quantity);
-        calculateTotalCost();
-    });
-
-    $(document).on("click", ".remove-item", function() {
-        $(this).closest(".cart-item").remove();
-        calculateTotalCost();
-    });
-
+    // Function to fetch data
     function fetch_data(page) {
         $.ajax({
             url: "user.controller.php",
@@ -92,14 +68,44 @@ $(document).ready(function() {
         });
     }
 
+    // Initial fetch of data
     fetch_data();
 
+    // Pagination click event handler
     $(document).on("click", ".page-item", function() {
-        let page = $(this).attr("id");
+        var page = $(this).attr("id");
         fetch_data(page);
     });
 
-    calculateTotalCost();
+    // Click event handler for product images
+    $(document).on("click", ".image", function() {
+        var productId = $(this).data("id");
+        $.ajax({
+            url: "fetch_product_details.php",
+            method: "POST",
+            data: {
+                product_id: productId
+            },
+            success: function(response) {
+                var product = JSON.parse(response);
+                var productName = product.pro_name;
+                var productPrice = parseFloat(product.price).toFixed(2);
+                var productImage = product.image;
+                var productInfo = "<div class='product-info'><img src='" + productImage +
+                    "' alt='" +
+                    productName + "'><br>" + productName + " - $" + productPrice + "</div>";
+                $("#cart").append(productInfo);
+                console.log(productName);
+
+                // Update total price
+                totalPrice += parseFloat(product.price);
+                $("#total-price").text("Total Price: $" + totalPrice.toFixed(2));
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching product details:", error);
+            }
+        });
+    });
 });
 </script>
 
