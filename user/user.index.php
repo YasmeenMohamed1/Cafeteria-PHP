@@ -111,6 +111,7 @@ session_start();
                     if (existingItem == 0) {
                         $("#cart").append(response);
                         alert("You have added a new item to the cart.");
+                        calculateTotalPrice();
 
                     }
 
@@ -129,9 +130,12 @@ session_start();
             }
         });
 
+        
+
+        // Attach an event listener to input[type="number"] elements within the cart
         $('#cart').on('change', 'input[type="number"]', function() {
             calculateTotalPrice();
-        }); 
+        });
 
         function calculateTotalPrice() {
             var totalPrice = 0;
