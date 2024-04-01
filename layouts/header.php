@@ -13,14 +13,22 @@
         <!-- font-awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../css/our_styles.css" rel="stylesheet" />
-        <link href="../css/user_style.css" rel="stylesheet" />
-        <!-- <style>
-            #cart_container{
-            border: 1px solid red;
-            padding:2px;
+        <link href="css/our_styles.css" rel="stylesheet" />
+        <link href="../css/user_styles.css" rel="stylesheet" />
+        
+        <style>
+            /* Custom background color */
+            .custom-bg {
+            background-color: #faebd7; 
+            /* background-color: #F9E0BB; */
             }
-        </style> -->
+            
+            .text-color_dark_cafe {
+            color: #884A39; 
+            }
+
+            
+        </style>
 
     </head>
     <body>

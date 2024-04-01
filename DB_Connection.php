@@ -34,6 +34,22 @@ class db
         }
     }
 
+    function select_column($col,$table,$cond=1){
+        try {
+        return $this->connection->query("select $col from $table where $cond");
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    function select_count($table,$cond=1){
+        try {
+        return $this->connection->query("select count(*) as count from $table where $cond");
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     function get_data_with_limit($table, $start = 0, $offset = 4)
     {
         try {
