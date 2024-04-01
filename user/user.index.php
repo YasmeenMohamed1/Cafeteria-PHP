@@ -2,11 +2,7 @@
 session_start();
 (@include("../layouts/header.php")) or die(" file not exist");
 (@include("../layouts/user.nav.php")) or die(" file not exist");
-if(true == 2){
-    echo 'true';
-}else{
-    echo 'false';
-}
+
 ?>
 
 <div class="container mt-5">
