@@ -31,11 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-4" style="background-color: beige; margin-top: 10px;">
+            <div style="background-color: beige; margin-top: 10px;">
                 <h5 class="text-center">Cart Items</h5>
-                <?php
+                <!-- <?php
                 $Total = 0;
-                if (isset($_SESSION['cart'])) { ?>
+                if (isset($_SESSION['cart'])) { ?> -->
                 <table class="table table-bordered">
                     <thead>
                         <th>Product</th>
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['confirm'])) {
                 <form action="" method="post">
 
                     <label for="notes"> Notes:</label><br>
-                    <textarea id="notes" name="notes" rows="4" cols="50"></textarea><br><br>
+                    <textarea id="notes" name="notes"></textarea></textarea><br><br>
 
                     <label for="room">Room:</label>
                     <select id="room" name="category">
