@@ -1,5 +1,6 @@
 <?php
 session_start();
+// session_destroy();
 (@include("../layouts/header.php")) or die(" file not exist");
 (@include("../layouts/user.nav.php")) or die(" file not exist");
 (@include("../cart/rooms.php"))
