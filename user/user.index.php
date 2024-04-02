@@ -1,6 +1,5 @@
 <?php
 session_start();
-// session_destroy();
 (@include("../layouts/header.php")) or die(" file not exist");
 (@include("../layouts/user.nav.php")) or die(" file not exist");
 (@include("../cart/rooms.php"))
@@ -34,6 +33,9 @@ session_start();
                     <hr>
                     <div class="text-end">
                         <div id="cartTotalPrice" class="text-end"></div>
+                        <input type="hidden" id="totalPrice" name="totalPrice">
+                        <input type="hidden" id="orderDateTime" name="orderDateTime"
+                            value="<?php echo date('Y-m-d H:i:s'); ?>">
                         <button type="submit" name="confirm" class="btn btn-primary text-end">Confirm</button>
 
                     </div>
@@ -56,160 +58,135 @@ session_start();
     </div>
 </div>
 <!-- Jquery Js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
 
-        var totalPrice = 0;
-        calculateTotalPrice();
+    var totalPrice = 0;
+    calculateTotalPrice();
 
 
-        fetch_data();
+    fetch_data();
 
-        function fetch_data(page) {
-            $.ajax({
-                url: "user.controller.php",
-                method: "POST",
-                data: {
-                    page: page
-                },
-                success: function(data) {
-                    $("#proData").html(data)
+    function fetch_data(page) {
+        $.ajax({
+            url: "user.controller.php",
+            method: "POST",
+            data: {
+                page: page
+            },
+            success: function(data) {
+                $("#proData").html(data)
 
-                    // calculateTotalPrice(); //////////////////
-                }
-            });
-        }
-
-        $(document).on("click", ".page-item", function() {
-            let page = $(this).attr("id");
-            fetch_data(page);
+            }
         });
+    }
+
+    $(document).on("click", ".page-item", function() {
+        let page = $(this).attr("id");
+        fetch_data(page);
+    });
 
 
-        $(document).on("click", ".proItem", function() {
-            var id = $(this).find('.id').val();
-            var name = $(this).find('.name').val();
-            var price = $(this).find('.price').val();
-            var quantity = $(this).find('.quantity').val();
-            //  alert("id" + id + ", name" + name + ", price" + price + ", quantity" + quantity)
-            $.ajax({
-                method: "POST",
-                url: "../cart/add_to_cart.php",
-                data: {
-                    id: id,
-                    name: name,
-                    price: price,
-                    quantity: quantity
-                },
-                success: function(response) {
-                    var itemId = $(response).find('input[name^="products["][name$="][id]"]').val();
-                    var existingItem = $('#cart input[type="hidden"][name="products[' + itemId + '][id]"][value="' + itemId + '"]').length;
+    $(document).on("click", ".proItem", function() {
+        var id = $(this).find('.id').val();
+        var name = $(this).find('.name').val();
+        var price = $(this).find('.price').val();
+        var quantity = $(this).find('.quantity').val();
+        //  alert("id" + id + ", name" + name + ", price" + price + ", quantity" + quantity)
+        $.ajax({
+            method: "POST",
+            url: "../cart/add_to_cart.php",
+            data: {
+                id: id,
+                name: name,
+                price: price,
+                quantity: quantity
+            },
+            success: function(response) {
+                var itemId = $(response).find('input[name^="products["][name$="][id]"]')
+                    .val();
+                var existingItem = $('#cart input[type="hidden"][name="products[' + itemId +
+                    '][id]"][value="' + itemId + '"]').length;
 
-                    if (existingItem == 0) {
-                        $("#cart").append(response);
-                        alert("You have added a new item to the cart.");
-
-                    }
+                if (existingItem == 0) {
+                    $("#cart").append(response);
+                    alert("You have added a new item to the cart.");
 
                 }
-            });
-
-            var $this = $(this);
-            var $latestOrder = $("#latestOrder");
-
-            var isClicked = $this.hasClass('clicked');
-
-            if (!isClicked) {
-                var $clonedProduct = $this.clone().appendTo($latestOrder);
-                $this.addClass('clicked');
 
             }
         });
 
-        $('#cart').on('change', 'input[type="number"]', function() {
-            calculateTotalPrice();
-        }); 
+        var $this = $(this);
+        var $latestOrder = $("#latestOrder");
 
-        function calculateTotalPrice() {
-            var totalPrice = 0;
+        var isClicked = $this.hasClass('clicked');
 
-            // Iterate over each item in the cart
-            $('#cart .cart-item').each(function() {
-                // Get the quantity and price of the current item
-                var quantity = parseInt($(this).find('.quantity').val());
-                var price = parseFloat($(this).find('input[name^="products["][name$="][price]"]').val());
-                console.log(quantity,price);
-                // Calculate the subtotal for the current item
-                var subtotal = quantity * price;
+        if (!isClicked) {
+            var $clonedProduct = $this.clone().appendTo($latestOrder);
+            $this.addClass('clicked');
 
-                // Add the subtotal to the total price
-                totalPrice += subtotal;
-            });
-
-            // Display the total price
-            $('#cartTotalPrice').text(totalPrice.toFixed(2)); // Assuming you have an element with id="total-price" to display the total price
         }
-
-
-        // function calculateTotalPrice() {
-        //     totalPrice = 0;
-        //     $(".proItem").each(function() {
-        //         var price = parseFloat($(this).find('.price').val());
-        //         totalPrice = (totalPrice + price);
-        //     });
-        //     $("#cartTotalPrice").text("Total Price: $" + totalPrice.toFixed(2));
-        // }
-
-        function placeOrder(orderData) {
-            $.ajax({
-                url: "process_order.php",
-                method: "POST",
-                data: orderData,
-                success: function(response) {
-                    console.log("Order successfully placed:", response);
-
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error placing order:", error);
-                }
-            });
-        }
-
-        // $("#orderForm").submit(function(event) {
-        //     event.preventDefault();
-
-        //     var orderNotes = $("#orderNotes").val();
-        //     var total = $("#cartTotalPrice").text();
-
-        //     var cartItems = [];
-        //     $(".proItem").each(function() {
-        //         var id = $(this).find('.id').val();
-        //         var name = $(this).find('.name').val();
-        //         var price = $(this).find('.price').val();
-        //         var quantity = $(this).find('.quantity').val();
-        //         cartItems.push({
-        //             id: id,
-        //             name: name,
-        //             price: price,
-        //             quantity: quantity
-        //         });
-        //     });
-
-        //     // Prepare order data
-        //     var orderData = {
-        //         orderNotes: orderNotes,
-        //         total: total,
-        //         cartItems: cartItems
-        //     };
-
-        //     // Send order data to server
-        //     placeOrder(orderData);
-        // });
-
     });
+
+    $('#cart').on('change', 'input[type="number"]', function() {
+        calculateTotalPrice();
+    });
+
+    function calculateTotalPrice() {
+        var totalPrice = 0;
+
+        $('#cart .cart-item').each(function() {
+            var quantity = parseInt($(this).find('.quantity').val());
+            var price = parseFloat($(this).find('input[name^="products["][name$="][price]"]').val());
+            console.log(quantity, price);
+            var subtotal = quantity * price;
+
+
+            totalPrice += subtotal;
+        });
+
+
+        $('#cartTotalPrice').text(totalPrice.toFixed(
+            2));
+
+        $('#totalPrice').val(totalPrice.toFixed(2));
+
+    }
+
+
+    function placeOrder(orderData) {
+        $.ajax({
+            url: "process_order.php",
+            method: "POST",
+            data: orderData,
+            success: function(response) {
+                console.log("Order successfully placed:", response);
+
+            },
+            error: function(xhr, status, error) {
+                console.error("Error placing order:", error);
+            }
+        });
+    }
+
+    var now = new Date();
+    var formattedDateTime = now.toISOString().slice(0, 19).replace("T", " ");
+    document.getElementById("orderDateTime").value = formattedDateTime;
+
+    $(document).ready(function() {
+        $(document).on("click", ".remove-item", function() {
+            $(this).closest('.cart-item').remove();
+        });
+    });
+
+
+});
 </script>
 
 <?php

@@ -1,5 +1,5 @@
 <?php
-require("db_connection.php");
+require("DB_connection.php");
 
 if (isset($_POST['product_id'])) {
     $productId = $_POST['product_id'];

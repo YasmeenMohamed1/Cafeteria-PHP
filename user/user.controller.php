@@ -19,9 +19,6 @@ $start = ( $page - 1 ) * $limit;
 $result = $database->get_data_with_limit("product",$start,$limit);
 $products = $result->fetchAll(PDO::FETCH_ASSOC);
     
-    // echo "<pre>";
-    // var_dump($data);
-    // echo "</pre>";
 
 $records=$database->get_data("product");
 $num_of_rows=$records->rowCount();
