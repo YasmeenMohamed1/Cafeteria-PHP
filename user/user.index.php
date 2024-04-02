@@ -12,14 +12,14 @@ session_start();
 
         <div class="col-4">
             <h3 class="d-flex flex-wrap mb-2">Cart Items</h3>
-            <div class="cart_con">
-                <form class="w-75" action="../cart/make_order.php" method="post">
+            <div class="cart_con custom-bg text-color_dark_cafe rounded border border-primary">
+                <form class="w-75 m-auto py-3" id="make_order" action="../cart/make_order.php" method="post">
                     <div class="product_item form-row" id="cart">
 
                     </div>
                     <div class="mb-3">
                         <label for="room" class="form-label">Select Room:</label>
-                        <select class="form-select" id="room" name="room">
+                        <select class="form-select text-color_dark_cafe" id="room" name="room">
                             <?php
                             foreach ($rooms as $room) {
                             ?><option value="<?= $room["room_no"] ?>">Room <?= $room["room_no"] ?></option><?php
@@ -33,8 +33,9 @@ session_start();
                     </div>
                     <hr>
                     <div class="text-end">
-                        <div id="cartTotalPrice" class="text-end"></div>
-                        <button type="submit" name="confirm" class="btn btn-primary text-end">Confirm</button>
+                        <div id="cartTotalPrice" class="text-end" ></div>
+                        <input type="hidden" name="totalprice" >
+                        <button type="submit" name="confirm" class=" btn btn-primary  text-color_dark_cafe text-end " >Confirm</button>
 
                     </div>
                 </form>
@@ -63,9 +64,6 @@ session_start();
     $(document).ready(function() {
 
         var totalPrice = 0;
-        calculateTotalPrice();
-
-
         fetch_data();
 
         function fetch_data(page) {
@@ -77,18 +75,16 @@ session_start();
                 },
                 success: function(data) {
                     $("#proData").html(data)
-
-                    // calculateTotalPrice(); //////////////////
                 }
             });
         }
-
+        //pagination
         $(document).on("click", ".page-item", function() {
             let page = $(this).attr("id");
             fetch_data(page);
         });
 
-
+       //set data to cart
         $(document).on("click", ".proItem", function() {
             var id = $(this).find('.id').val();
             var name = $(this).find('.name').val();
@@ -110,7 +106,7 @@ session_start();
 
                     if (existingItem == 0) {
                         $("#cart").append(response);
-                        alert("You have added a new item to the cart.");
+                        // alert("You have added a new item to the cart.");
                         calculateTotalPrice();
 
                     }
@@ -119,8 +115,7 @@ session_start();
             });
 
             var $this = $(this);
-            var $latestOrder = $("#latestOrder");
-
+            // var $latestOrder = $("#latestOrder");
             var isClicked = $this.hasClass('clicked');
 
             if (!isClicked) {
@@ -128,11 +123,16 @@ session_start();
                 $this.addClass('clicked');
 
             }
+          
         });
 
-        
+        $('#cart').on('click', '.btn-outline-danger', function() {
+             
+                var $cartItem = $(this).closest('.cart-item');
+                $cartItem.remove();
+                calculateTotalPrice();
+        });
 
-        // Attach an event listener to input[type="number"] elements within the cart
         $('#cart').on('change', 'input[type="number"]', function() {
             calculateTotalPrice();
         });
@@ -140,78 +140,27 @@ session_start();
         function calculateTotalPrice() {
             var totalPrice = 0;
 
-            // Iterate over each item in the cart
+          
             $('#cart .cart-item').each(function() {
-                // Get the quantity and price of the current item
                 var quantity = parseInt($(this).find('.quantity').val());
                 var price = parseFloat($(this).find('input[name^="products["][name$="][price]"]').val());
-                console.log(quantity,price);
-                // Calculate the subtotal for the current item
                 var subtotal = quantity * price;
-
-                // Add the subtotal to the total price
                 totalPrice += subtotal;
+                $('input[name="totalprice"]').val(totalPrice.toFixed(2));
+
             });
 
-            // Display the total price
-            $('#cartTotalPrice').text(totalPrice.toFixed(2)); // Assuming you have an element with id="total-price" to display the total price
+            $('#cartTotalPrice').text("Total price: "+totalPrice.toFixed(2)); // Assuming you have an element with id="total-price" to display the total price
+        }
+        
+        $('#make_order').on('submit', function(event) {
+        // Check if the cart is empty
+        if ($('#cart .cart-item').length === 0) {
+            event.preventDefault();
+            alert("Your cart is empty. Please add products before submitting the form.");
         }
 
-
-        // function calculateTotalPrice() {
-        //     totalPrice = 0;
-        //     $(".proItem").each(function() {
-        //         var price = parseFloat($(this).find('.price').val());
-        //         totalPrice = (totalPrice + price);
-        //     });
-        //     $("#cartTotalPrice").text("Total Price: $" + totalPrice.toFixed(2));
-        // }
-
-        function placeOrder(orderData) {
-            $.ajax({
-                url: "process_order.php",
-                method: "POST",
-                data: orderData,
-                success: function(response) {
-                    console.log("Order successfully placed:", response);
-
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error placing order:", error);
-                }
-            });
-        }
-
-        // $("#orderForm").submit(function(event) {
-        //     event.preventDefault();
-
-        //     var orderNotes = $("#orderNotes").val();
-        //     var total = $("#cartTotalPrice").text();
-
-        //     var cartItems = [];
-        //     $(".proItem").each(function() {
-        //         var id = $(this).find('.id').val();
-        //         var name = $(this).find('.name').val();
-        //         var price = $(this).find('.price').val();
-        //         var quantity = $(this).find('.quantity').val();
-        //         cartItems.push({
-        //             id: id,
-        //             name: name,
-        //             price: price,
-        //             quantity: quantity
-        //         });
-        //     });
-
-        //     // Prepare order data
-        //     var orderData = {
-        //         orderNotes: orderNotes,
-        //         total: total,
-        //         cartItems: cartItems
-        //     };
-
-        //     // Send order data to server
-        //     placeOrder(orderData);
-        // });
+    });
 
     });
 </script>

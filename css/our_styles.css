@@ -2851,7 +2851,7 @@ textarea.form-control-lg {
   --bs-btn-color: #000;
   --bs-btn-bg: #e6a756;
   --bs-btn-border-color: #e6a756;
-  --bs-btn-hover-color: #000;
+  --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: #eab46f;
   --bs-btn-hover-border-color: #e9b067;
   --bs-btn-focus-shadow-rgb: 196, 142, 73;
@@ -11031,3 +11031,48 @@ p {
   font-size: 1.2rem;
 }
 
+/********************************user style*************************************/
+.col-8{
+  color: white;
+}
+
+.cont {
+  position: relative;
+}
+
+.menu-price {
+  position: absolute;
+  margin: 0;
+  top: -8px;
+  right: 90px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #33211d;
+  background: #da9f5b;
+}
+
+.text-sm {
+  font-size: 1rem;
+}
+.lastproduct ,.allproduct{
+  color: #fff;
+  font-size: 25px;
+  margin-bottom: 30px !important;
+}
+.allproduct{
+  padding-top: 15px;
+  border-top: solid white 3px ;
+}
+hr {
+  border: 0;
+  height: 6px;
+  background: white;
+  margin: 20px 0;
+}
+.quantity{
+width: 50px !important;
+}
