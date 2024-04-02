@@ -90,7 +90,7 @@ session_start();
             var name = $(this).find('.name').val();
             var price = $(this).find('.price').val();
             var quantity = $(this).find('.quantity').val();
-            //  alert("id" + id + ", name" + name + ", price" + price + ", quantity" + quantity)
+        //    alert("id" + id + ", name" + name + ", price" + price + ", quantity" + quantity)
             $.ajax({
                 method: "POST",
                 url: "../cart/add_to_cart.php",
@@ -115,7 +115,7 @@ session_start();
             });
 
             var $this = $(this);
-            // var $latestOrder = $("#latestOrder");
+            var $latestOrder = $("#latestOrder");
             var isClicked = $this.hasClass('clicked');
 
             if (!isClicked) {
