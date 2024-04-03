@@ -1,13 +1,13 @@
 <?php
 
-require("DB_Connection.php");
+require("../DB_Connection.php");
 $db=new db(); 
 $result = $db->get_data("category");
 $data = $result->fetchAll(PDO::FETCH_ASSOC);
 $id=$_REQUEST['id'];
 $result2 = $db->get_data("product","id=$id");
 $product = $result2->fetch(PDO::FETCH_ASSOC);
-var_dump($product);
+// var_dump($product);
 
 
 // var_dump($data);
@@ -26,8 +26,8 @@ if(isset($_GET['errors']))
 
 <?php
 
-(@include ("./layouts/header.php")) or die(" file not exist");
-(@include ("./layouts/user.nav.php")) or die(" file not exist");
+(@include ("../layouts/header.php")) or die(" file not exist");
+(@include ("../layouts/user.nav.php")) or die(" file not exist");
 ?>
 
 <section class="container custom-bg mt-4 mb-3 w-75" >
@@ -139,5 +139,5 @@ if(isset($_GET['errors']))
 </section>
 
 <?php
-(@include ("./layouts/footer.php")) or die(" file not exist");
+(@include ("../layouts/footer.php")) or die(" file not exist");
 ?>

@@ -1,12 +1,12 @@
 <?php
 
-(@include ("./layouts/header.php")) or die(" file not exist");
-(@include ("./layouts/user.nav.php")) or die(" file not exist");
+(@include ("../layouts/header.php")) or die(" file not exist");
+(@include ("../layouts/admin.nav.php")) or die(" file not exist");
 ?>
 
 <?php
 
-require("DB_Connection.php");
+require("../DB_Connection.php");
 $db=new db(); 
 $result = $db->get_data("room");
 $data = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -123,5 +123,5 @@ if(isset($_GET['errors']))
 </section>
 
 <?php
-(@include ("./layouts/footer.php")) or die(" file not exist");
+(@include ("../layouts/footer.php")) or die(" file not exist");
 ?>

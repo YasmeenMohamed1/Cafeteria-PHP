@@ -1,4 +1,8 @@
 <?php
+session_start();
+    // echo "<pre>";
+    // var_dump($_POST);
+    // echo "</pre>";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $selected_user = $_POST['user_select'];
@@ -8,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $products = $_POST['products'];
         $orderNotes = $_POST['orderNotes'];
-        $totalPrice = $_POST['totalPrice'];
+        $totalPrice = $_POST['totalprice'];
         $orderDateTime = $_POST['orderDateTime'];
 
         $orderSql = "INSERT INTO `order` (notes, price, user_id, created_at) VALUES (?, ?, ?, ?)";
@@ -32,14 +36,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if ($orderStmt->rowCount() > 0 && $orderItemsStmt->rowCount() > 0) {
-            echo "Order successfully placed!";
+           
+            $_SESSION["success_msg"]= "Order successfully placed!";
+            header("Location:admin.index.php");
         } else {
-            echo "Failed to place the order. Please try again.";
+            $_SESSION["error_msg"]= "Failed to place the order. Please try again.";
+            header("Location:admin.index.php");
         }
     } else {
-        echo "<div>Error: No user selected</div>";
+        $_SESSION["error_msg"]="Error: No user selected";
     }
-} else {
-    echo "<div>Error: No user selected</div>";
 }
 ?>

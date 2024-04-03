@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-$_SESSION['css_path']= "css/temp_styles.css";
+$_SESSION['css_path']= "assets/css/temp_styles.css";
 
 (@include ("layouts/header.php")) or die("Header file does not exist");
 

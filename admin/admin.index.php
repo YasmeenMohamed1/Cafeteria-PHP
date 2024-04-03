@@ -9,13 +9,14 @@ if(empty($_SESSION['user_name'])){
 $_SESSION['css_path']= "../assets/css/temp_styles.css";
 $_SESSION['nav-image']= "../assets/img/users/{$_SESSION['image']}";
 $_SESSION['logout']= "../logout.php";
-
+$_SESSION['pro-image']="../assets/img/products/";
 
 // session_destroy();
 (@include("../layouts/header.php")) or die(" file not exist");
-(@include("../layouts/user.nav.php")) or die(" file not exist");
+(@include("../layouts/admin.nav.php")) or die(" file not exist");
+$_SESSION['rooms']="../DB_Connection.php";
+(@include("../user/cart/rooms.php"));
 
-(@include("../user/cart/rooms.php"))
 ?>
 
 
@@ -26,7 +27,7 @@ $_SESSION['logout']= "../logout.php";
             <h3 class="d-flex flex-wrap mb-2">Cart Items</h3>
             <div class="cart_con custom-bg text-color_dark_cafe rounded border border-primary">
                 <form class="w-75 m-auto py-3" id="make_order" action="make_order_admin.php" method="post">
-                    <div class="product_item form-row" id="cart">
+                    <div class="form-row" id="cart">
 
                     </div>
                     <div class="mb-3">
@@ -45,12 +46,14 @@ $_SESSION['logout']= "../logout.php";
                     </div>
                     <hr>
                     <div class="text-end">
-                        <div id="cartTotalPrice" class="text-center mb-3 text-end" ></div>
+                        <div id="cartTotalPrice" class="mb-3 text-end" ></div>
                         <input type="hidden" name="totalprice" >
+                        <input type="hidden" id="orderDateTime" name="orderDateTime"
+                            value="<?php echo date('Y-m-d H:i:s'); ?>">
                         <button type="submit" name="confirm" class=" btn btn-primary  text-color_dark_cafe text-center " >Confirm</button>
 
                     </div>
-                </form>
+                
             </div>
 
         </div>
@@ -69,7 +72,7 @@ $_SESSION['logout']= "../logout.php";
         }
         ?>
     </select>
-
+    </form>
     </div>
             <h5 class="mb-3 allproduct">All Products</h5>
             <div id="proData">
@@ -82,20 +85,9 @@ $_SESSION['logout']= "../logout.php";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script>
-    function validateForm() {
-        var selectedUser = $('#user_select').val();
-        if (!selectedUser) {
-            alert('Please select a user.');
-            return false;
-        }
-        return true;
-    }
+
+    <script>
     $(document).ready(function() {
-        $('.btn-primary').click(function() {
-            var selectedUser = $('#user_select').val(); 
-            $('#selected_user').val(selectedUser);
-        });
 
         var totalPrice = 0;
         fetch_data();
@@ -147,9 +139,10 @@ $_SESSION['logout']= "../logout.php";
 
                 }
             });
+          
+        });
 
-
-        $('#cart').on('click', '.btn-primay', function() {
+        $('#cart').on('click', '.btn-primary', function() {
              
                 var $cartItem = $(this).closest('.cart-item');
                 $cartItem.remove();
@@ -177,17 +170,24 @@ $_SESSION['logout']= "../logout.php";
         }
         
         $('#make_order').on('submit', function(event) {
-        // Check if the cart is empty
-        if ($('#products .cart-item').length === 0) {
-            event.preventDefault();
-            alert("Your cart is empty. Please add products before submitting the form.");
-        }
+            var selectedUser = $('#user_select').val();
+            if (!selectedUser) {
+                event.preventDefault();
+                alert('Please select a user.');
+                
+            }
+           
+            // Check if the cart is empty
+            if ($('#cart .cart-item').length === 0) {
+                event.preventDefault();
+                alert("Your cart is empty. Please add products before submitting the form.");
+            }
+        
+           });
 
     });
-
-    });
+    
 </script>
-
 <?php
 (@include("../layouts/footer.php")) or die(" file not exist");
 ?>

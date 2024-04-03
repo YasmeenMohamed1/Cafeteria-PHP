@@ -1,6 +1,6 @@
 <?php
 
-require("DB_Connection.php");
+require("../DB_Connection.php");
 
 $db=new db();
 

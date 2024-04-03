@@ -1,6 +1,6 @@
 <?php
-
-require("../../DB_Connection.php");
+session_start();
+require($_SESSION['rooms']);
 $database = new db();
 
 $rooms=$database->get_data("room");

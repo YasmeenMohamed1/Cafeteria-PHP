@@ -8,13 +8,12 @@
                         class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.html">Home</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.html">About</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="AllUsers.php">Users</a>
-                        </li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="admin.index.php">Home</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="AllProducts.php">Products</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="AllUsers.php">Users</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase"
-                                href="AllProducts.php">Products</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="store.html">Store</a></li>
+                                href="admin.index.php">Manual Order</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="checks.php">Checks</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="<?=$_SESSION['logout']?>">Logout</a></li>
                     </ul>
                 </div>

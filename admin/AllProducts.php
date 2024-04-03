@@ -1,16 +1,13 @@
 <?php
 
-(@include ("./layouts/header.php")) or die(" file not exist");
-(@include ("./layouts/admin.nav.php")) or die(" file not exist");
+(@include ("../layouts/header.php")) or die(" file not exist");
+(@include ("../layouts/admin.nav.php")) or die(" file not exist");
 ?>
 
-<?php
-(@include ("./layouts/footer.php")) or die(" file not exist");
-?>
 
     
 <?php
-require("connect.php");
+require("../DB_Connection.php");
 
 ini_set("display_errors",1);
 ini_set("display_startup_errors",1);
@@ -49,7 +46,7 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)) {
     foreach ($row as $key=>$value) {
         if ($key == "image") {
             if (!empty($value)) {
-                echo "<td><img src='./assets/img/products/$value' height='70' width='70' ></td>";
+                echo "<td><img src='../assets/img/products/$value' height='70' width='70' ></td>";
             } else {
                 echo "<td></td>";
             }
@@ -116,3 +113,7 @@ echo "</nav>";
     }
     
 </style>
+
+<?php
+(@include ("../layouts/footer.php")) or die(" file not exist");
+?>
