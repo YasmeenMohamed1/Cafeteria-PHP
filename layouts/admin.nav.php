@@ -14,6 +14,7 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase"
                                 href="admin.index.php">Manual Order</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="checks.php">Checks</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="admin.orders.php">Orders</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="<?=$_SESSION['logout']?>">Logout</a></li>
                     </ul>
                 </div>
