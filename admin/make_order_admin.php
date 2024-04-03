@@ -25,6 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $quantity = $product['quantity'];
 
             $orderItemsStmt->execute([$orderId, $productId, $quantity]);
+
+            $updateProductSql = "UPDATE `product` SET `quantity` = `quantity` - ? WHERE `id` = ?";
+            $updateProductStmt = $pdo->prepare($updateProductSql);
+            $updateProductStmt->execute([$quantity, $productId]);
         }
 
         if ($orderStmt->rowCount() > 0 && $orderItemsStmt->rowCount() > 0) {
