@@ -15,12 +15,13 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase"
                                 href="AllProducts.php">Products</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="store.html">Store</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="<?=$_SESSION['logout']?>">Logout</a></li>
                     </ul>
                 </div>
 
                 <div class="d-flex align-items-center">
-                    <h2 class="text-light me-3">hi, <?php echo $_SESSION['user_name']; ?></h2>
-                    <img src="<?php echo $_SESSION['image']; ?>" alt="img" class="rounded-circle"
+                    <h2 class="text-light me-3"><?= ucfirst($_SESSION['user_name']); ?></h2>
+                    <img src="<?=$_SESSION['nav-image']?>" alt="img" class="rounded-circle"
                         style="width: 40px; height: 40px;">
 
                     <!-- <img src="img.jpg" class="rounded-circle" style="width: 50px; height: 50px;"> -->

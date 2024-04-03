@@ -7,7 +7,7 @@ $itemHtml .= '<p class="ml-1">'.$_POST['name'].'</p>
               </div> 
               <p class="ml-1 price"><small>EGP</small> '.$_POST["price"].'</p>
               <div class="input-group-append">
-                <button class="btn btn-outline-danger h-75 " type="button">
+                <button class="btn btn-primary text-color_dark_cafe" type="button">
                   <i class="fa-solid fa-xmark align-items-center"></i>
                 </button>
               </div>';

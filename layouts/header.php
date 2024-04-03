@@ -1,3 +1,6 @@
+<?php
+session_start() 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,8 +17,7 @@
     <!-- font-awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../css/our_styles.css" rel="stylesheet" />
-    <link href="../css/user_styles.css" rel="stylesheet" />
+    <link href="<?= $_SESSION['css_path']?>" rel="stylesheet" />
 
     <style>
         /* Custom background color */
@@ -79,8 +81,45 @@
         .quantity {
             width: 50px !important;
         }
-      
-     
+      /**********************************order style*****************************/
+      .order-details {
+            display: none;
+        }
+        .order-date {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+       
+        .table {
+            border: 1px solid #2f170fe6;
+            background-color:#f1e7d8;
+            color:#2f170fe6;
+        }
+        .table th, .table td {
+            border: 1px solid #2f170fe6;
+        }
+        .order-items {
+            display: flex;
+        }
+        /*******************************login**************************/
+        .card {
+        margin-top: 95px;
+        margin-bottom: 225px;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background-color: #f1e7d8;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        /* .btn-primary {
+            width: 100%;
+        } */
+        legend,label{
+        color: #2f170fe6;
+    }
     </style>
 
 </head>

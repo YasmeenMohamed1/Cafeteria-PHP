@@ -87,6 +87,7 @@ class db
     }
 }
 
+$connection= new db;
 
 //How to use this class?
 //To connect database in another pages write the following

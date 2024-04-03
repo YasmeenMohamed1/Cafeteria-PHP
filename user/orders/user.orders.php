@@ -1,30 +1,17 @@
-<?php (@include ("./layouts/header.php")) or die(" file not exist"); ?>
-<?php (@include ("./layouts/admin.nav.php")) or die(" file not exist"); ?>
+<?php
+session_start();
+
+if(empty($_SESSION['user_name'])){
+    header("location:../../login.php");
+}
+
+$_SESSION['css_path']= "../../css/temp_styles.css";
+
+ (@include ("./layouts/header.php")) or die(" file not exist"); 
+(@include ("./layouts/admin.nav.php")) or die(" file not exist"); 
+?>
 
 
-    <style>
-        .order-details {
-            display: none;
-        }
-        .order-date {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-       
-        .table {
-            border: 1px solid #2f170fe6;
-            background-color:#f1e7d8;
-            color:#2f170fe6;
-        }
-        .table th, .table td {
-            border: 1px solid #2f170fe6;
-        }
-        .order-items {
-            display: flex;
-        }
-      
-    </style>
 
     <div class="container">
         <h1 class="mt-4">My Orders</h1>

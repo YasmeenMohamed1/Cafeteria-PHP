@@ -1,8 +1,9 @@
 <?php 
 session_start();
 
-(@include ("./layouts/header.php")) or die("Header file does not exist");
-(@include ("./layouts/admin.nav.php")) or die("Admin navigation file does not exist");
+$_SESSION['css_path']= "css/temp_styles.css";
+
+(@include ("layouts/header.php")) or die("Header file does not exist");
 
 require("DB_Connection.php");
 
@@ -18,19 +19,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $connection->prepare("SELECT * FROM user WHERE email = :email");
     $stmt->execute(array(':email' => $email));
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // var_dump($user);
 
     if ($user) {
-        if (password_verify($password, $user['password'])) {
             $_SESSION['id'] = $user['id'];
-            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_name'] = $user['user_name'];
             $_SESSION['image'] = $user['image'];
 
+        if (password_verify($password, $user['password'])) {
+
             if ($user['role'] == 'admin') {
-                header("Location: adminHome.php");
+                header("Location: ./admin/admin.index.php");
                 exit();
             } elseif ($user['role'] == 'user') {
-                header("Location: user.index.php");
-                exit();
+               
+                header("Location: ./user/cart/user.index.php"); 
             }
         } else {
             $errorMsg = "<span style='color: red;'>email or password is wrong</span>";
@@ -57,25 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <title>Login</title>
-<style>
-    .card {
-        margin-top: 95px;
-        margin-bottom: 225px;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        background-color: #f1e7d8;
-    }
-    .form-group {
-        margin-bottom: 20px;
-    }
-    .btn-primary {
-        width: 100%;
-    }
-    legend,label{
-    color: #2f170fe6;
-}
-</style>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -113,4 +97,4 @@ function checkEmailExistence() {
 }
 </script>
 
-<?php (@include ("./layouts/footer.php")) or die("Footer file does not exist"); ?>
+

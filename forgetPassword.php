@@ -1,5 +1,11 @@
-<?php (@include ("./layouts/header.php")) or die(" file not exist"); ?>
-<?php (@include ("./layouts/admin.nav.php")) or die(" file not exist"); ?>
+<?php
+session_start();
+
+$_SESSION['css_path']= "css/temp_styles.css";
+
+(@include ("./layouts/header.php")) or die(" file not exist"); 
+
+?>
 
 <?php
 require("DB_Connection.php");
@@ -38,6 +44,9 @@ $successMsg = "";
                         $stmt->execute(array(':password' => $hashedPassword, ':email' => $email));
 
                         $successMsg = "Password updated successfully";
+                        ?>
+                        <button class="btn btn-primary"> back to Login</button>
+                        <?php
                     }
                 }
             }

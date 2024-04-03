@@ -1,5 +1,21 @@
 <?php
 
+session_start();
+
+if(empty($_SESSION['user_name'])){
+    header("location:../login.php");
+}
+
+
+$_SESSION['css_path']= "../assets/css/temp_styles.css";
+$_SESSION['nav-image']= "../assets/img/users/{$_SESSION['image']}";
+$_SESSION['logout']= "../logout.php";
+
+
+// session_destroy();
+(@include("../layouts/header.php")) or die(" file not exist");
+(@include("../layouts/admin.nav.php")) or die(" file not exist");
+
 // require("DB_Connection.php");
 // $db=new db(); 
 // $result = $db->get_data("category");
@@ -21,11 +37,6 @@ if(isset($_GET['errors']))
 
 ?>
 
-<?php
-
-(@include ("./layouts/header.php")) or die(" file not exist");
-(@include ("./layouts/user.nav.php")) or die(" file not exist");
-?>
 
 <section class="container custom-bg mt-4 mb-3 w-75" >
 <div class="container  w-75 ">
@@ -69,6 +80,6 @@ if(isset($_GET['errors']))
 
 <?php
 
-(@include ("./layouts/footer.php")) or die(" file not exist");
+(@include ("../layouts/footer.php")) or die(" file not exist");
 
 ?>
