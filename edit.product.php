@@ -18,10 +18,7 @@ if(isset($_GET['errors']))
 {
     $errors=json_decode($_GET['errors'],true);
 
-    // foreach($errors as $error)
-    // {
-    //     echo $error;
-    // }
+   
 
 }
 
@@ -63,7 +60,6 @@ if(isset($_GET['errors']))
 </div>
 
 <div class="mb-3">
-  <!-- <span class="input-group-text">$</span> -->
   <label for="quantity" class="form-label text-color_dark_cafe fw-bolder">Quantity  </label>
   <input type="number" class="form-control" aria-label="Quantity" id="quantity" name="quantity" min="0" value=<?php echo $product['quantity']?>>
   <div class="text-danger">
@@ -80,7 +76,6 @@ if(isset($_GET['errors']))
 </div>
 
 <div class="mb-3">
-  <!-- <span class="input-group-text">$</span> -->
   <label for="price" class="form-label text-color_dark_cafe fw-bolder">Price  </label>
 
   <div class="input-group">
@@ -132,13 +127,6 @@ if(isset($_GET['errors']))
 
 
 
-<div class="mb-3">
-
-<label for="product_img" class="form-label fw-bolder text-color_dark_cafe">Product Image: </label>
-<input type="file" name="product_img" id="product_img"  class="btn btn-primary" value=<?php echo $product['image'] ?>>
-<!-- <label for="user_img" class="btn btn-primary">Choose File</label> -->
-  
-</div>
 
 <div class="mb-3 pt-3 pb-5 text-center">
     <input type="submit" value="Submit" name="edit_product" class="btn btn-primary btn-lg">

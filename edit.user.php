@@ -110,12 +110,7 @@ if(isset($_GET['errors']))
   <input type="text" class="form-control" value="1" name="ext" id="exampleFormControlInput3" disabled readonly> 
 </div>
 
-<div class="mb-3">
 
-<label for="user_img" class="form-label fw-bolder text-color_dark_cafe">User Image: </label>
-<input type="file" name="user_img" id="user_img"  class="btn btn-primary">
-  
-</div>
 
 <div class="mb-3 pt-3 pb-5 text-center">
     <input type="submit" value="update" name="update" class="btn btn-primary btn-lg">

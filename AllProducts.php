@@ -42,7 +42,6 @@ echo "<table class='table' border=2>
 
 $available = 0;
 
-// Modify the query to include the LIMIT and OFFSET clauses
 $result = $connection->get_data_with_limit('product',$offset, $rowsPerPage);
 
 while($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -86,18 +85,14 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)) {
     <a href='deleteProduct.php?id={$row['id']}' class='btn btn-danger'>Delete</a> 
      </td>";
     echo "</tr>";
-    //edit button is pending 
 }
 
 echo "</table>";
 
-// Calculate the total number of rows
 $totalRows = $connection->get_data('product')->rowCount();
 
-// Calculate the total number of pages
 $totalPages = ceil($totalRows / $rowsPerPage);
 
-// Display pagination links
 echo "<nav aria-label='Page navigation'>";
 echo "<ul class='pagination'>";
 for ($i = 1; $i <= $totalPages; $i++) {

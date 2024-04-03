@@ -12,6 +12,6 @@ $room_no = $result['room_no'];
 $id=$_REQUEST['id'];
 var_dump($_REQUEST);
 $result=$connection->update_Data("user","`user_name`='{$_REQUEST['username']}',`role`='{$_REQUEST['role']}'","id=$id");
-// header("Location:AllUsers.php");
+header("Location:AllUsers.php");
 
 ?>
