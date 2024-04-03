@@ -65,7 +65,7 @@ $_SESSION['logout']= "../logout.php";
         $result = $database->get_connection()->query($sql);
         $result = $result->fetchAll(PDO::FETCH_ASSOC);
         foreach ($result as $row) {
-            echo '<option value="' . $row['user_id'] . '">' . $row['user_name'] . '</option>';
+           ?><option value="<?= $row["user_name"] ?>"><?= $row["user_name"] ?></option><?php
         }
         ?>
     </select>
