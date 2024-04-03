@@ -202,8 +202,8 @@ else if(isset($_POST['add_product']))
 
         $db->insert_data("product","pro_name,quantity,price,image,category_id",
         "'$product','$quantity','$price','$img','$catID'");
-
-        header("Location:AllProducts.php");
+var_dump($img);
+        // header("Location:AllProducts.php");
         
         }catch(PDOException $exc){
         

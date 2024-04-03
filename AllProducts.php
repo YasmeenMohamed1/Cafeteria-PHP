@@ -15,6 +15,20 @@ require("connect.php");
 ini_set("display_errors",1);
 ini_set("display_startup_errors",1);
 error_reporting(E_ALL);
+
+// Define the number of rows to display per page
+$rowsPerPage = 5;
+
+// Get the current page from the query string
+if (isset($_GET['page'])) {
+    $currentPage = $_GET['page'];
+} else {
+    $currentPage = 1;
+}
+
+// Calculate the offset for the query
+$offset = ($currentPage - 1) * $rowsPerPage;
+
 echo "<table class='table' border=2>
 <tr class='table-secondary'>
 <th>ID</th>
@@ -24,74 +38,74 @@ echo "<table class='table' border=2>
 <th>Image</th>
 <th>Category</th>
 <th colspan='3'>Controllers</th>
-
-
-
 </tr>";
-$available=0;
-$result=$connection->get_data('product');
-while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-    echo "<tr >";
-    foreach ($row as $key=>$value) {
-        if ($key=="image") {
-            if(!empty($value)){
-                echo "<td><img src='./assets/img/products/$value' height='70' width='70' ></td>";
 
-            }
-           
-            
-            else{
+$available = 0;
+
+// Modify the query to include the LIMIT and OFFSET clauses
+$result = $connection->get_data_with_limit('product',$offset, $rowsPerPage);
+
+while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+    echo "<tr>";
+    foreach ($row as $key=>$value) {
+        if ($key == "image") {
+            if (!empty($value)) {
+                echo "<td><img src='./assets/img/products/$value' height='70' width='70' ></td>";
+            } else {
                 echo "<td></td>";
             }
-        }
-        else  if ($key=="quantity") {
-            if($value>0){
-                $available=1;
+        } else if ($key == "quantity") {
+            if ($value > 0) {
+                $available = 1;
+            } else {
+                $available = 0;
             }
-            else{
-                $available=0;
-
-            }
-            echo "<td>$value</td> ";
-
-            
-        }
-        else if($key=="category_id"){
-            $result2=$connection->get_data('category', "id=$value");
+            echo "<td>$value</td>";
+        } else if ($key == "category_id") {
+            $result2 = $connection->get_data('category', "id=$value");
             $cat = $result2->fetch(PDO::FETCH_ASSOC);
-                
-                foreach($cat as $k=>$val){
-                    if ($k=="cat_name") {
-                           echo "<td>$val</td>";
-
-                    }
-                }}
-
-        else if($key=="price"){
-            echo "<td>$value EGP</td> ";
+            foreach($cat as $k=>$val) {
+                if ($k == "cat_name") {
+                    echo "<td>$val</td>";
                 }
-        else{
-        echo "<td>$value</td>";
+            }
+        } else if ($key == "price") {
+            echo "<td>$value EGP</td>";
+        } else {
+            echo "<td>$value</td>";
         }
     }
     echo "<td>";
-    
-    if($available>0){
-    echo "<a href='show.php?id={$row['id']}' class='btn btn-success'>Available</a>";
-    }
-    else{
+    if ($available > 0) {
+        echo "<a href='show.php?id={$row['id']}' class='btn btn-success'>Available</a>";
+    } else {
         echo "<p class='btn btn-dark'>Out of stock</p>";
-
     }
     echo "
-    <a href='edite.php?id={$row['id']}' class='btn btn-warning'>Edit</a> 
+    <a href='edit.product.php?id={$row['id']}' class='btn btn-warning'>Edit</a> 
     <a href='deleteProduct.php?id={$row['id']}' class='btn btn-danger'>Delete</a> 
      </td>";
     echo "</tr>";
     //edit button is pending 
 }
 
-?>  
+echo "</table>";
+
+// Calculate the total number of rows
+$totalRows = $connection->get_data('product')->rowCount();
+
+// Calculate the total number of pages
+$totalPages = ceil($totalRows / $rowsPerPage);
+
+// Display pagination links
+echo "<nav aria-label='Page navigation'>";
+echo "<ul class='pagination'>";
+for ($i = 1; $i <= $totalPages; $i++) {
+    echo "<li class='page-item' class='btn btn-secondary'><a class='page-link' href='?page=$i'>$i</a></li>";
+}
+echo "</ul>";
+echo "</nav>";
+?>
 <style>
     td{
         color:white;
