@@ -92,6 +92,10 @@ $_SESSION['logout']= "../logout.php";
         return true;
     }
     $(document).ready(function() {
+        $('.btn-primary').click(function() {
+            var selectedUser = $('#user_select').val(); 
+            $('#selected_user').val(selectedUser);
+        });
 
         var totalPrice = 0;
         fetch_data();
