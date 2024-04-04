@@ -20,7 +20,7 @@ if(empty($_SESSION['user_name'])){
             unset($_SESSION['alert']);
         }
 $_SESSION['home_path']="../cart/user.index.php";
-$_SESSION['order_path']="user.orders.php";        
+$_SESSION['orders_path']="user.orders.php";        
 
 $_SESSION['css_path']= "../../assets/css/temp_styles.css";
 $_SESSION['nav-image']= "../../assets/img/users/{$_SESSION['image']}";

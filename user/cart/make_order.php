@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($orderStmt->rowCount() > 0 && $orderItemsStmt->rowCount() > 0) {
                     
             $_SESSION["success_msg"]= "Order successfully placed!";
-            header("Location:user.index.php");
+            header("Location:../orders/user.orders.php");
         } else {
             $_SESSION["error_msg"]= "Failed to place the order. Please try again.";
             header("Location:user.index.php");

@@ -11,7 +11,7 @@ $_SESSION['nav-image']= "../../assets/img/users/{$_SESSION['image']}";
 $_SESSION['logout']= "../../logout.php";
 $_SESSION['pro-image']="../../assets/img/products/";
 $_SESSION['home_path']="user.index.php";
-$_SESSION['order_path']="../orders/user.orders.php";
+$_SESSION['orders_path']="../orders/user.orders.php";
 // session_destroy();
 (@include("../../layouts/header.php")) or die(" file not exist");
 (@include("../../layouts/user.nav.php")) or die(" file not exist");
