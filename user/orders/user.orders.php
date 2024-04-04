@@ -20,7 +20,8 @@ if(empty($_SESSION['user_name'])){
             unset($_SESSION['alert']);
         }
 
-$_SESSION['css_path']= "../../css/temp_styles.css";
+$_SESSION['css_path']= "../../assets/css/temp_styles.css";
+$_SESSION['nav-image']= "../../assets/img/users/{$_SESSION['image']}";
 
  (@include ("../../layouts/header.php")) or die(" file not exist"); 
 (@include ("../../layouts/user.nav.php")) or die(" file not exist"); 
