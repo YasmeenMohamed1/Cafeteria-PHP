@@ -13,17 +13,12 @@ ini_set("display_errors",1);
 ini_set("display_startup_errors",1);
 error_reporting(E_ALL);
 
-// Define the number of rows to display per page
 $rowsPerPage = 5;
-
-// Get the current page from the query string
 if (isset($_GET['page'])) {
     $currentPage = $_GET['page'];
 } else {
     $currentPage = 1;
 }
-
-// Calculate the offset for the query
 $offset = ($currentPage - 1) * $rowsPerPage;
 
 echo "<table class='table' border=2>
@@ -90,8 +85,9 @@ $totalRows = $connection->get_data('product')->rowCount();
 
 $totalPages = ceil($totalRows / $rowsPerPage);
 
-echo "<nav aria-label='Page navigation'>";
-echo "<ul class='pagination'>";
+echo "<nav aria-label='Page navigation' >";
+echo "<ul class='pagination' style='display: flex; justify-content: center;'>";
+
 for ($i = 1; $i <= $totalPages; $i++) {
     echo "<li class='page-item' class='btn btn-secondary'><a class='page-link' href='?page=$i'>$i</a></li>";
 }
@@ -100,8 +96,7 @@ echo "</nav>";
 ?>
 <style>
     td{
-        color:white;
-    }
+        color: #2f170fe6;     }
     
     img{
         border-radius: 20px;

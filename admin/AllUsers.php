@@ -75,8 +75,9 @@ echo "</table>";
 $totalRows = $connection->get_data('user')->rowCount();
 $totalPages = ceil($totalRows / $rowsPerPage);
 
-echo "<nav aria-label='Page navigation'>";
-echo "<ul class='pagination'>";
+echo "<nav aria-label='Page navigation' >";
+echo "<ul class='pagination' style='display: flex; justify-content: center;'>";
+
 for ($i = 1; $i <= $totalPages; $i++) {
     echo "<li class='page-item' class='btn btn-secondary'><a class='page-link' href='?page=$i'>$i</a></li>";
 }
@@ -85,8 +86,7 @@ echo "</nav>";
 ?>
 <style >
     td{
-    color:white;
-}
+        color: #2f170fe6; }
 
 img{
     border-radius: 20px;

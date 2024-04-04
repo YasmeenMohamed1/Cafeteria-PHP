@@ -1,6 +1,6 @@
 <?php
-(@include ("../layouts/header.php")) or die("Header file does not exist");
-(@include ("../layouts/admin.nav.php")) or die("Admin navigation file does not exist");
+(@include ("../layouts/header.php")) or die(" file not exist");
+(@include ("../layouts/admin.nav.php")) or die(" file not exist");
 ?>
 
 <style>
@@ -8,99 +8,154 @@
         width: 100%;
     }
     .order-details {
-            display: none;
-        }
-        .order-date {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-       
-        .table {
-            border: 1px solid #2f170fe6;
-            background-color:#f1e7d8;
-            color:#2f170fe6;
-        }
-        .table th, .table td {
-            border: 1px solid #2f170fe6;
-        }
-        .order-items {
-            display: flex;
-        }
+        display: none;
+    }
+    .order-date {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+   
+    .table {
+        border: 1px solid #2f170fe6;
+        background-color:#f1e7d8;
+        color:#2f170fe6;
+    }
+    .table th, .table td {
+        border: 1px solid #2f170fe6;
+    }
+    .order-items {
+        display: flex;
+    }
 </style>
 
 <div class="container">
+
+
     <h1 class="mt-4">Checks</h1>
-    <div class="row">
-        <div class="col-md-6 text-center">
-            <form>
-                <label for="dateFrom">Date From:</label>
-                <input type="date" id="dateFrom" name="dateFrom">
-            </form>
-        </div>
-        <div class="col-md-6 text-center">
-            <form>
-                <label for="dateTo">Date To:</label>
-                <input type="date" id="dateTo" name="dateTo">
-            </form>
-        </div>
-        <select class="col-md-6 text-center" id="select" name="select" required>
-                            <option value="">Select User</option>
-                            <?php foreach ($users as $user): ?>
-                                <option value="<?php echo $user['user_name']; ?>"><?php echo $user['user_name']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-    </div>
+
     
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>User Name</th>
                 <th>Total Amount</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="order-date-row order-row">
-                <td class="order-name">
-                    <div class="d-flex align-items-center">
-                    <span class="toggle-btn btn btn-primary">+</span>    
-                    <span>Name 1</span>
-                    </div>
-                </td>
-                <td>$100</td>
-            </tr>
-            <tr class="order-details" style="display: none;">
-                <td colspan="2">
-                    <table class="inner-table">
-                        <thead>
-                            <tr>
-                                <th>Order Date</th>
-                                <th>Account</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="order-date-row">
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                    <span class="toggle-btn toggle-date-btn btn btn-primary">+</span>    
-                                    <span>2024-04-01</span>
-                                    </div>
-                                </td>
-                                <td>Account 1</td>
-                            </tr>
-                            <tr class="order-details" style="display: none;">
-                                <td colspan="4">
-                                    <div class="order-items">
-                                        <div>Item 1</div>
-                                        <div>Item 2</div>
-                                        <div>Item 3</div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
+            <?php
+            ini_set("display_errors",1);
+            ini_set("display_startup_errors",1);
+            error_reporting(E_ALL);
+            if(empty($_SESSION['user_name'])){
+                header("location:../login.php");
+            }
+            require ('../DB_Connection.php');
+            $connection=new db;
+            $result = $connection->get_data('user');
+            while ($user_row = $result->fetch(PDO::FETCH_ASSOC)) { 
+                $total_amount = 0;
+                $result_order = $connection->get_data('`order`', "user_id = {$user_row['id']}");
+                while ($order_row = $result_order->fetch(PDO::FETCH_ASSOC)) {
+                    $total_amount += 100; // replace with your logic to calculate total amount
+                }
+                ?>
+                <tr class="order-row">
+                    <td class="order-name">
+                        <div class="d-flex align-items-center">
+                            <span class="toggle-btn btn btn-primary">+</span>
+                            <span><?php echo $user_row['user_name']; ?></span>
+                        </div>
+                    </td>
+                    <td><?php echo '$' . $total_amount; ?></td>
+                </tr>
+                <tr class="order-details" style="display: none;">
+                    <td colspan="2">
+                        <table class="inner-table">
+                            <thead>
+                                <tr>
+                                    <th>Order Date</th>
+                                    <th>Account</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $result_order = $connection->get_data('`order`', "user_id = {$user_row['id']}");
+                                while ($order_row = $result_order->fetch(PDO::FETCH_ASSOC)) {
+                                ?>
+                                    <tr class="order-date-row">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <span class="toggle-btn toggle-date-btn btn btn-primary">+</span>
+                                                <span><?php echo $order_row['created_at']; ?></span>
+                                            </div>
+                                        </td>
+                                        <td><?php echo $order_row['price']; ?></td>
+                                    </tr>
+                                    <tr class="order-details" style="display: none;">
+                                        <td colspan="2">
+                                            <div class="order-items">
+                                                <?php
+                                                $order_id = $order_row['id'];
+                    
+   
+
+                                                $result_order_items = $connection->get_data('`order`', "id= $order_id");
+
+                                                while ($item_row = $result_order_items->fetch(PDO::FETCH_ASSOC)) {
+
+
+                                                ?>
+                                                <table>
+                                                    <tr>
+                                                        <th>
+                                                            Price
+                                                        </th>
+                                                        <th>
+                                                            Status
+                                                        </th>
+                                                        <th>
+                                                            Notes
+                                                        </th>
+                                                        
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                        <div><?php echo $item_row['price']; ?></div>
+
+                                                        </td>
+                                                        <td>
+                                                        <div><?php echo $item_row['status']; ?></div>
+                                                        </td>
+                                                        <td>
+                                                        <div><?php echo $item_row['notes']; ?></div>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+
+                                                    
+                                                    ?>
+                                                </table>
+                                                    
+                                                <?php
+                                                }
+                                                
+                                                ?>
+                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                        
+                    </td>
+                </tr>
+            <?php
+            }
+            ?>
         </tbody>
     </table>
 </div>
@@ -122,4 +177,4 @@
         });
     });
 </script>
-<?php (@include ("../layouts/footer.php")) or die(" file not exist"); ?>
+<?php (@include ("./layouts/footer.php")) or die(" file not exist"); ?>

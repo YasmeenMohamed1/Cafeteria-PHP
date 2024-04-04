@@ -3,7 +3,7 @@ ini_set("display_errors",1);
 ini_set("display_startup_errors",1);
 error_reporting(E_ALL);
 
-require("connect.php");
+require("../DB_Connection.php");
  $room_id=$_REQUEST["room"];
  $room= $connection->get_data("room","room_no = $room_id");
  $result = $room->fetch(PDO::FETCH_ASSOC);
