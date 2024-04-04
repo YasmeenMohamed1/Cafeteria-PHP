@@ -14,8 +14,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="user.index.php">Home</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="../orders/user.orders.php">My Orders</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="<?= $_SESSION['home_path']?>">Home</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="<?= $_SESSION['orders_path']?>">My Orders</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="<?=$_SESSION['logout']?>">Logout</a></li>
                     </ul>
                     <div class="d-flex align-items-center">
